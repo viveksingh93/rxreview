@@ -8,6 +8,9 @@
     <input type="text" v-model="mobile" placeholder="Enter Mobile No" />
     <input type="text" v-model="emailId" placeholder="Enter Email" />
     <input type="password" v-model="password" placeholder="Enter Password" />
+
+
+    <!-- <input type="password" v-model="password" placeholder="Enter Password" /> -->
     <button v-on:click="signup">Submit</button>
     <p>click here to <router-link to="/Login">Login</router-link>
     </p>
