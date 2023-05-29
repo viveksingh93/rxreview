@@ -76,7 +76,7 @@ export default {
                     name: 'Signup'
                 })
             }
-            let result = await axois.get('http://localhost:5081/api/Resturent')
+            let result = await axois.get('https://localhost:7005/api/reviewDescription')
             console.log(result.data)
             console.log(this.reviewRate)
             this.reviews = result.data

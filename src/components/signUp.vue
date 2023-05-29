@@ -37,7 +37,6 @@ export default {
     methods: {
         async signup() {
             console.log("signup", this.name, this.emailId, this.password, this.mobile)
-            //let result = await axios.post("http://localhost:5081/api/Users", {    https://localhost:7005/api/Users
             let result = await axios.post("https://localhost:7005/api/Users", {
                 name: this.name,
                 emailId: this.emailId,

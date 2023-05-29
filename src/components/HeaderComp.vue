@@ -3,7 +3,7 @@
     <router-link to="/">Home</router-link>
     <router-link to="/add-Review">Review</router-link>
     <router-link to="/contact-US">Contact US</router-link>
-    <a v-on:click="logout" href="#" style=" width: 199px;" class="logout">Login/Logout</a>
+    <a v-on:click="logout" href="#" style=" width: 199px;" class="logout">Login / Logout</a>
 
 </div>  
 </template>

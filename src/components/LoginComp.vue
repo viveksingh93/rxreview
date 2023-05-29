@@ -28,13 +28,12 @@ export default {
     data() {
         return {
             emailId: '',
-            password: '',
-            Role: ''
+            password: ''
         }
     },
     methods: {
         async login() {
-            let result = await axios.get(`http://localhost:5081/api/Users/UserLogin?EmailId=${this.emailId}&password=${this.password}&password=${this.Role}`);
+            let result = await axios.get(`https://localhost:7005/api/Users/UserLogin?EmailId=${this.emailId}&password=${this.password}`);
             if (result.status == 200) {
                 console.warn("check", result.data)
                 localStorage.setItem('user-info', JSON.stringify(result.data));
