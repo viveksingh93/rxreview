@@ -3,6 +3,7 @@ import Signup from "./components/signUp.vue"
 import LoginComp from './components/LoginComp.vue'
 import HeaderComp from './components/HeaderComp.vue'
 import AddReview from './components/AddReview.vue'
+//import exampleModel from './components/exampleModel.vue'
 import UpdateReview from './components/UpdateReview.vue'
 import contactUS from './components/contactUs.vue'
 
