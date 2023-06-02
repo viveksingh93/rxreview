@@ -9,24 +9,19 @@
                     &#9733;
                 </span>
                 Anonymous <input type="checkbox" v-model="isAnonymous">
-
                 <form class="add">
-                    <!-- <input type="text" placeholder="Name" v-model="Name" name="name" /> -->
-                    <textarea type="text" placeholder="Description" v-model="Description" name="Description"></textarea>
+                    <textarea type="text" :class="{ 'error': isTextareaValid }" placeholder="Description" v-model="Description" v-on:input="validateInput"></textarea>
+                    <p v-if="isTextareaValid" class="error-message">Please Fill Description!!!</p>
                     <br>
-                    <!-- <button type="button" v-on:click="Cancel">Cancel</button> -->
-                    <button @click="closeModal" style="margin: 10px;width: 80px;" id="btnClose">Close</button>
-                    <button type="button" v-on:click="AddReview" style="margin: 10px;width: 80px;">Submit</button>
-                    <span></span>
+                    <button v-on:click="close" id="btnClose">Close</button>
+                    <button :disabled="btnSaveDsbl" type="button" v-on:click="AddReview">Submit</button>
                 </form>
-
             </slot>
         </div>
     </div>
 </div>
 </template>
 
-  
 <script>
 import axios from 'axios'
 
@@ -40,26 +35,26 @@ export default {
     },
     data() {
         return {
-
             Name: '',
             Description: '',
             selectedStar: 0,
             totalStars: 5,
             stars: [1, 2, 3, 4, 5],
             isAnonymous: false,
-            dateTime: ''
+            dateTime: '',
+            isTextareaValid: false,
         }
     },
     methods: {
         AddReview() {
-            console.log(this.Name, this.Description, this.selectedStar, this.isAnonymous, this.dateTime)
+            // console.log(this.Name, this.Description, this.selectedStar, this.isAnonymous, this.dateTime)
             let index = 0;
             for (index; index < document.getElementsByClassName('rating')[0].children.length; index++) {
                 if (!document.getElementsByClassName('rating')[0].children[index].classList.contains('filled'))
                     break;
             }
             let result;
-            if (window.confirm('Want to submit')) {
+            if (this.validateInput()) {
                 result = axios.post("https://localhost:7005/api/reviewDescription", {
                     Name: this.Name,
                     description: this.Description,
@@ -81,14 +76,19 @@ export default {
         selectStar(star) {
             this.selectedStar = star;
         },
-
         close() {
-
             // Emit an event to notify the parent component to close the modal
             this.$emit('close');
         },
-
-       
+        validateInput() {
+            if (this.Description == null || this.Description.trim() === '') {
+                this.isTextareaValid = true;
+                return false;
+            } else {
+                this.isTextareaValid = false;
+                return true;
+            }
+        }
     },
     mounted() {
         let user = localStorage.getItem('user-info')
@@ -98,12 +98,39 @@ export default {
                 name: 'Signup'
             })
         }
+    },
+    computed: {
+        btnSaveDsbl() {
+            if (this.Description == null || this.Description.trim() === '') {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
     }
 }
 </script>
 
-  
 <style scoped>
+button {
+    margin: 10px;
+    width: 80px;
+
+}
+
+.hidden {
+    display: none;
+}
+
+.error {
+    border: 1px solid red;
+}
+
+.error-message {
+    color: red;
+}
+
 .modal {
     /* Modal styles */
     position: fixed;
@@ -123,6 +150,7 @@ export default {
     padding: 20px;
     border-radius: 10px;
     width: 500px;
+    text-align: center;
 }
 
 .Adr {

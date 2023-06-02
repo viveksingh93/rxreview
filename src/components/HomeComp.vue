@@ -1,67 +1,68 @@
 <template>
-<div>
+<div class="main">
     <HeaderComp />
-    <div>
-        <AddReview :visible="showModal" @close="closeModal">
 
-        </AddReview>
-
-    </div>
-    <div class="rar ">
-
-        <slot>
-            <h2>
-                Ratings and reviews
-                <!-- <router-link :to="'/add-Review/'" class="Update fa fa-arrow-right">
-                    <font-awesome-icon icon="phone" />
-                    <img class="image" alt="Vue logo" src="../assets/Arrow.png">
-                </router-link> -->
-
-                <button @click="openModal" class="rbtn">
-                    <img class="image" alt="Vue logo" src="../assets/Arrow.png"></button>
-            </h2>
-
-        </slot>
-
-        <!-- <div class="P4w39d">
-
-        </div> -->
-        <h2 class="jILTFe">
-            <div class="P4w39d">
-                {{ avg }}
-                <span v-for="star in stars" :key="star" class="starh" :class="{ 'filled': star <= avg }">
-                    &#9733;
-                </span>
-
+    <div class="maind wkMJlb YWi3ub">
+        <div class="nRgZne">
+            <div>
+                <AddReview :visible="showModal" @close="closeModal">
+                </AddReview>
             </div>
+            <div class="qZmL0">
+                <slot>
+                    <h2>
+                        New Ratings and reviews
+                        <button @click="openModal" class="rbtn">
+                            <img class="image" alt="Vue logo" src="../assets/Arrow.png"></button>
+                    </h2>
+                </slot>
+                <h2 class="jILTFe">
+                    <table>
+                        <tr>
 
-            <div class="">
-                <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+                            <td>
+                                <div class="P4w39d">
+                                    {{ avg.toFixed(1) }}
+                                    <span v-for="star in stars" :key="star" class="starh" :class="{ 'filled': star <= avg }">
+                                        &#9733;
+                                    </span>
+                                </div>
 
-        </h2>
+                            </td>
+                            <td>
+<!--                                
+                                <datepicker v-model="selectedDate" :format="dateFormat"></datepicker>
+                                <p>Date: {{ selectedDate }}</p> -->
+                            </td>
+                        </tr>
 
-        <div v-for="item in reviews" :key="item.id" class="EGFGHd">
+                    </table>
 
-            <table>
-                <div class="bp9Aid">
-                    <span v-if="!item.isAnonymous ">
-                        {{ item.name }}
-                    </span>
-
-                    <div class="rating">
-                        <div>
-                            <span v-for="star in stars" :key="star" class="starh" :class="{ 'filled': star <= item.reviewRate }">
-                                &#9733;
+                    <!-- <div class="">
+                        <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div> -->
+                </h2>
+                <div v-for="item in reviews" :key="item.id" class="EGFGHd">
+                    <table class="gSGphe">
+                        <div class="bp9Aid">
+                            <span v-if="!item.isAnonymous ">
+                                {{ item.name }}
                             </span>
-                            {{ format_date(item.dateTime) }}
+
+                            <div class="rating">
+                                <div>
+                                    <span v-for="star in stars" :key="star" class="starh" :class="{ 'filled': star <= item.reviewRate }">
+                                        &#9733;
+                                    </span>
+                                    {{ format_date(item.dateTime) }}
+                                </div>
+                            </div>
                         </div>
+                    </table>
+                    <div class="h3YV2d">
+                        {{ item.description }}
                     </div>
                 </div>
-            </table>
-            <div class="h3YV2d">
-                <!--  style="text-align: justify; width: 1200px;" -->
-                {{ item.description }}
             </div>
         </div>
     </div>
@@ -73,7 +74,7 @@ import HeaderComp from './HeaderComp.vue'
 import moment from 'moment'
 import axois from 'axios'
 import AddReview from './AddReview.vue'
-
+//import Datepicker from 'vue-datepicker';
 export default {
     name: 'HomeComp',
     data() {
@@ -89,12 +90,16 @@ export default {
             totalStars: 5,
             stars: [1, 2, 3, 4, 5],
             showModal: false,
-            avg: 0
+            avg: 0,
+
+            selectedDate: null,
+            dateFormat: 'yyyy-MM-dd',
         }
     },
     components: {
         HeaderComp,
-        AddReview
+        AddReview,
+        //Datepicker
     },
     methods: {
 
@@ -128,7 +133,7 @@ export default {
         getCurrentDate() {
             setInterval(() => {
                 this.currentDate = this.dateTime;
-            }, 1000); // Update the date every second (adjust as needed)
+            }, 1000);
         },
         openModal() {
             this.showModal = true;
@@ -158,7 +163,7 @@ export default {
 .EGFGHd {
     /* padding: 24px 0; */
 
-    padding: 20px;
+    padding: 24px 0;
 }
 
 .P4w39d {
@@ -167,7 +172,6 @@ export default {
     padding-top: 0px;
     width: 250px;
     color: black !important;
-
 }
 
 .CiSZSd {
@@ -256,14 +260,14 @@ table {
 }
 
 .bp9Aid {
-    color: rgb(95, 99, 104);
+    color: rgb(0, 0, 0);
     fill: rgb(95, 99, 104);
     stop-color: rgb(95, 99, 104);
     font-family: Roboto, Arial, sans-serif;
-    font-size: .75rem;
+    font-size: 1.1rem;
     font-weight: 400;
     letter-spacing: .025em;
-    line-height: 1rem;
+    line-height: 1.2rem;
     margin-left: 1ch;
 }
 
@@ -275,7 +279,7 @@ table {
     overflow-wrap: anywhere;
     text-align: start !important;
     color: dimgray !important;
-    width: 1200px;
+    width: 1000px;
 
 }
 
@@ -302,17 +306,60 @@ table {
 }
 
 .rbtn {
-  display: inline-block;
-  position: relative;
-  box-sizing: border-box;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  fill: currentColor;
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  user-select: none;
-  overflow: visible;
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    fill: currentColor;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    overflow: visible;
+}
+
+.maind {
+
+    margin: 51px 9px 34px 65px;
+
+    font-size: smaller;
+    width: 80%;
+    background-color: #fdfdfd;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+.main {
+    padding: 0px 0px;
+    background-color: #fdfdfd;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+.gSGphe {
+    display: grid;
+    -moz-box-align: center;
+    align-items: center;
+    grid-column-gap: 16px;
+    grid-template-columns: repeat(2, max-content);
+    height: 40px;
+}
+
+.o45e4d {
+    width: 364px;
+}
+
+.qZmL0 {
+    width: calc(100% - 436px);
+}
+
+.wkMJlb {
+    width: calc(100% - 144px);
+}
+
+.YWi3ub {
+    max-width: 1296px;
 }
 </style>

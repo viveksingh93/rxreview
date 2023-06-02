@@ -1,8 +1,9 @@
 <template>
     <HeaderComp />
 <!-- <img class="" alt="Vue logo" src="../assets/radix.jpg"> -->
-<h1>Login </h1>
+
 <div class="login">
+    <h1>Login </h1>
     <div>
         <input type="text" v-model="emailId" placeholder="Enter Email" />
     </div>
@@ -10,10 +11,16 @@
     <div>
         <input type="password" v-model="password" placeholder="Enter Password" />
     </div>
-
-    <button v-on:click="login">Login</button>
-    <p>click here to <router-link to="/Sign-up"> Sign-up</router-link>
-    </p>
+<div>
+    <div>
+       click here to <router-link to="/Sign-up"> Sign-up</router-link>
+       <button v-on:click="login" class="btn">Login</button>
+    </div>
+    
+</div>
+   
+    
+   
 </div>
 </template>
 
@@ -64,5 +71,11 @@ export default {
     top: 0px;
     height: 100px;
     z-index: -1;
+}
+.login{
+    text-align: center;
+}
+.btn{
+    margin: 15px;
 }
 </style>

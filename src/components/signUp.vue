@@ -1,20 +1,23 @@
 <template>
-    <HeaderComp />
+<HeaderComp />
 <!-- <img class="" alt="Vue logo" src="../assets/radix.jpg"> -->
-<h1>Sign Up</h1>
-<div class="register">
 
+<div class="register">
+    <h1>Sign Up</h1>
     <input type="text" v-model="name" placeholder="Enter name" />
     <input type="text" v-model="mobile" placeholder="Enter Mobile No" />
     <input type="text" v-model="emailId" placeholder="Enter Email" />
     <input type="password" v-model="password" placeholder="Enter Password" />
-
-
     <!-- <input type="password" v-model="password" placeholder="Enter Password" /> -->
-    <button v-on:click="signup">Submit</button>
-    <p>click here to <router-link to="/Login">Login</router-link>
-    </p>
+<div>
+    <div>
+ click here to <router-link to="/Login">Login</router-link>
+        <button v-on:click="signup" class="btn">Submit</button>
+   
+    
 
+    </div>
+</div>
 </div>
 </template>
 
@@ -23,7 +26,7 @@ import axios from 'axios'
 import HeaderComp from './HeaderComp.vue'
 export default {
     name: 'signUp',
-    components:{
+    components: {
         HeaderComp
     },
     data() {
@@ -36,13 +39,12 @@ export default {
     },
     methods: {
         async signup() {
-            console.log("signup", this.name, this.emailId, this.password, this.mobile)
+            //  console.log("signup", this.name, this.emailId, this.password, this.mobile)
             let result = await axios.post("https://localhost:7005/api/Users", {
                 name: this.name,
                 emailId: this.emailId,
                 mobile: this.mobile,
                 password: this.password
-                
 
             });
             console.log(result.data);
@@ -68,4 +70,11 @@ export default {
 </script>
 
 <style>
+.register {
+    text-align: center;
+}
+
+.btn{
+    margin: 15px;
+}
 </style>
