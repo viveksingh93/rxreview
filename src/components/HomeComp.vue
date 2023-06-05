@@ -19,7 +19,6 @@
                 <h2 class="jILTFe">
                     <table>
                         <tr>
-
                             <td>
                                 <div class="P4w39d">
                                     {{ avg.toFixed(1) }}
@@ -27,28 +26,23 @@
                                         &#9733;
                                     </span>
                                 </div>
-
                             </td>
-                            <td>
-<!--                                
-                                <datepicker v-model="selectedDate" :format="dateFormat"></datepicker>
-                                <p>Date: {{ selectedDate }}</p> -->
+                            <td class="dateTag">
+                                <input type="date" class="dateinput" placeholder="choose date" v-model="searchDate" />
+                            </td>
+                            <td class="searchTag">
+                                <button class="srchBtn" @click="searchData">Searech</button>
                             </td>
                         </tr>
-
                     </table>
-
-                    <!-- <div class="">
-                        <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div> -->
                 </h2>
-                <div v-for="item in reviews" :key="item.id" class="EGFGHd">
+                <div v-for="item in filteredData" :key="item.id" class="EGFGHd">
                     <table class="gSGphe">
                         <div class="bp9Aid">
+
                             <span v-if="!item.isAnonymous ">
                                 {{ item.name }}
                             </span>
-
                             <div class="rating">
                                 <div>
                                     <span v-for="star in stars" :key="star" class="starh" :class="{ 'filled': star <= item.reviewRate }">
@@ -74,7 +68,8 @@ import HeaderComp from './HeaderComp.vue'
 import moment from 'moment'
 import axois from 'axios'
 import AddReview from './AddReview.vue'
-//import Datepicker from 'vue-datepicker';
+
+import '@vuepic/vue-datepicker/dist/main.css'
 export default {
     name: 'HomeComp',
     data() {
@@ -91,15 +86,13 @@ export default {
             stars: [1, 2, 3, 4, 5],
             showModal: false,
             avg: 0,
-
-            selectedDate: null,
-            dateFormat: 'yyyy-MM-dd',
+            searchDate: '',
+            filteredData: []
         }
     },
     components: {
         HeaderComp,
-        AddReview,
-        //Datepicker
+        AddReview
     },
     methods: {
 
@@ -116,10 +109,10 @@ export default {
             console.log(result.data)
             console.log(this.reviewRate)
             this.reviews = result.data
+            this.filteredData = result.data
             let total = 0;
             for (let index = 0; index < this.reviews.length; index++) {
                 total += this.reviews[index].reviewRate;
-
             }
             this.avg = total / this.reviews.length;
         },
@@ -141,7 +134,13 @@ export default {
         closeModal() {
             this.showModal = false;
         },
-
+        searchData() {
+            if (this.searchDate == null || this.searchDate == "" || this.searchDate == undefined) {
+                this.filteredData = this.reviews;
+                return;
+            }
+            this.filteredData = this.reviews.filter(item => new Date(item.dateTime).toLocaleDateString() == new Date(this.searchDate).toLocaleDateString());
+        }
     },
 
     mounted() {
@@ -159,7 +158,30 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.dateTag {
+    display: inline-grid;
+    width: 219px;
+}
+
+.dateinput {
+    border-radius: 6px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.searchTag {
+    display: inline-grid;
+    width: 100px;
+}
+
+.srchBtn {
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #049495;
+    color: white;
+}
+
 .EGFGHd {
     /* padding: 24px 0; */
 
@@ -361,5 +383,19 @@ table {
 
 .YWi3ub {
     max-width: 1296px;
+}
+
+.dp__icon {
+    stroke: currentcolor;
+    fill: currentcolor;
+    display: flex !important;
+    top: 48px !important;
+}
+
+.dp__calendar_header_item {
+    text-align: center;
+    flex-grow: 1;
+    height: 50px !important;
+    padding: 0px !important;
 }
 </style>
